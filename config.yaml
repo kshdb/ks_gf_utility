@@ -1,0 +1,5 @@
+# 文件配置
+ks_gf_file:
+  file:
+    upload:
+        path: "./upload"
