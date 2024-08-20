@@ -1,6 +1,6 @@
 module github.com/kshdb/ks_gf_utility
 
-go 1.22.5
+go 1.21.1
 
 require github.com/gogf/gf/v2 v2.7.2
 
