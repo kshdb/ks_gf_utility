@@ -43,10 +43,10 @@ func (f *FileInfo) Upload() (fileName string, err error) {
 /*
 多文件上传
 */
-func (f *FileInfo) Uploads(_files []*multipart.FileHeader) (fileNames []string, err error) {
+func (f *FileInfo) Uploads() (fileNames []string, err error) {
 	uploadPath := g.Cfg().MustGet(f.Ctx, "ks_gf_file.file.upload.path").String()
-	if len(_files) > 0 {
-		for _, _f := range _files {
+	if len(f.Files) > 0 {
+		for _, _f := range f.Files {
 			//打开上传文件
 			file, _ := _f.Open()
 			defer file.Close()
