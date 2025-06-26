@@ -26,7 +26,7 @@ type FileInfo struct {
 }
 
 /*
-文件上传
+文件上传-返回单图片结果
 */
 func (f *FileInfo) Upload() (fileName string, err error) {
 	uploadPath := g.Cfg().MustGet(f.Ctx, "ks_gf_file.file.upload.path").String()
@@ -41,7 +41,7 @@ func (f *FileInfo) Upload() (fileName string, err error) {
 }
 
 /*
-多文件上传
+多文件上传-返回多图片结果
 */
 func (f *FileInfo) Uploads() (fileNames []string, err error) {
 	uploadPath := g.Cfg().MustGet(f.Ctx, "ks_gf_file.file.upload.path").String()
