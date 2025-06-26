@@ -60,7 +60,7 @@ func (f *FileInfo) Uploads() (fileNames []string, err error) {
 			cur, _ := os.Create(fileName)
 			defer cur.Close()
 			io.Copy(cur, file)
-			fileNames = append(fileNames, _f.Filename)
+			fileNames = append(fileNames, fileName)
 		}
 	}
 	return
