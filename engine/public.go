@@ -103,3 +103,18 @@ func Auth(r *ghttp.Request) {
 		}
 	}
 }
+
+// 自由鉴权
+func AuthToken(r *ghttp.Request) {
+	_ctx := r.Context()
+	//获取token，如果token有时效，可以做刷新令牌
+	authHeader := r.GetHeader("token")
+	_res := tool.DoRes[any]{}
+	if authHeader == "" {
+		_res.Code = -1
+		_res.Msg = "未登录或非法访问!"
+		_res.RtJs(_ctx, _res)
+	} else {
+		r.Middleware.Next()
+	}
+}
