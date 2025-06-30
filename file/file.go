@@ -34,8 +34,10 @@ func (f *FileInfo) Upload() (fileName string, err error) {
 		err = gerror.New("上传文件路径配置不存在")
 	} else {
 		dateDirName := gtime.Now().Format("Ymd")
-		fileName, err = f.File.Save(gfile.Join(uploadPath, f.PathR, dateDirName), f.RandomName)
-		fileName = fmt.Sprintf("/%s/%s/%s/%s", uploadPath, f.PathR, dateDirName, fileName)
+		_path := fmt.Sprintf("%s/%s/%s", uploadPath, f.PathR, dateDirName)
+
+		fileName, err = f.File.Save(_path, f.RandomName)
+		fileName = fmt.Sprintf("%s/%s", _path, fileName)
 	}
 	return
 }
@@ -50,13 +52,15 @@ func (f *FileInfo) Uploads() (fileNames []string, err error) {
 			//打开上传文件
 			file, _ := _f.Open()
 			defer file.Close()
-			//创建上传目录
-			if !gfile.Exists(uploadPath) {
-				os.Mkdir(uploadPath, os.ModePerm)
-			}
+
 			dateDirName := gtime.Now().Format("Ymd")
+			_path := fmt.Sprintf("%s/%s/%s", uploadPath, f.PathR, dateDirName)
+			//创建上传目录
+			if !gfile.Exists(_path) {
+				os.Mkdir(_path, os.ModePerm)
+			}
 			//创建上传文件
-			fileName := fmt.Sprintf("%s/%s/%s/%s", uploadPath, f.PathR, dateDirName, _f.Filename)
+			fileName := fmt.Sprintf("%s/%s", _path, _f.Filename)
 			cur, _ := os.Create(fileName)
 			defer cur.Close()
 			io.Copy(cur, file)
