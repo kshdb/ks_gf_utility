@@ -60,7 +60,13 @@ func (f *FileInfo) Uploads() (fileNames []string, err error) {
 				os.Mkdir(_path, os.ModePerm)
 			}
 			//创建上传文件
-			fileName := fmt.Sprintf("%s/%s", _path, _f.Filename)
+			fileName := ""
+			if f.RandomName {
+				ext := gfile.Ext(_f.Filename)
+				fileName = fmt.Sprintf("%s/%s%s", _path, gtime.Now().Format("YmdHisu"), ext)
+			} else {
+				fileName = fmt.Sprintf("%s/%s", _path, _f.Filename)
+			}
 			cur, _ := os.Create(fileName)
 			defer cur.Close()
 			io.Copy(cur, file)
