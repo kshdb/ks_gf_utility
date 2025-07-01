@@ -7,6 +7,7 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/gogf/gf/v2/os/gtime"
+	"github.com/gogf/gf/v2/util/grand"
 	"io"
 	"mime/multipart"
 	"os"
@@ -60,7 +61,13 @@ func (f *FileInfo) Uploads() (fileNames []string, err error) {
 				os.Mkdir(_path, os.ModePerm)
 			}
 			//创建上传文件
-			fileName := fmt.Sprintf("%s/%s", _path, _f.Filename)
+			fileName := ""
+			if f.RandomName {
+				ext := gfile.Ext(_f.Filename)
+				fileName = fmt.Sprintf("%s/%s%s%s", _path, gtime.Now().Format("YmdHisu"), grand.Letters(4), ext)
+			} else {
+				fileName = fmt.Sprintf("%s/%s", _path, _f.Filename)
+			}
 			cur, _ := os.Create(fileName)
 			defer cur.Close()
 			io.Copy(cur, file)
